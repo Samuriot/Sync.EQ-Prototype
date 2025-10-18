@@ -19,7 +19,7 @@ app.get("/:username", async (req, res) => {
         if(!user) {
             return res.status(404).json({ error: "User not found" });
         }
-        res.json(user);
+        res.status(200).json(user);
     } catch(err) {
         res.status(400).json({error: err.message});
     }
