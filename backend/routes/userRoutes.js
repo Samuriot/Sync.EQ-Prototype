@@ -13,8 +13,22 @@ app.post("/", jwtCheck, async (req, res) => {
     } 
 });
 
+// check if a logged in user has an account after redirect from auth0
+app.get("/check", checkJwt, async (req, res) => {
+    try {
+        const auth0ID = req.auth.payload.sub; 
+        let user = await User.findOne({ auth0ID });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ error: "Server failed, Try Again Later" });
+    }
+});
+
 // find a specific user
-app.get("/:username", async (req, res) => {
+app.get("/get/:username", async (req, res) => {
     try {
         const user = await User.findById(req.params.username);
         if(!user) {
@@ -27,7 +41,7 @@ app.get("/:username", async (req, res) => {
 });
 
 // get all users in db
-app.get("/", async (req, res) => {
+app.get("/get", async (req, res) => {
     try {
         const users = await User.find();
         if(!users) {
