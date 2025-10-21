@@ -5,9 +5,10 @@ import mongoose from "mongoose";
 
 // User Class
 const UserSchema = new mongoose.Schema({
-    _id: {type: String, required: true},
-    auth0id: {type: String, required: true},
-    profession: {type: String, required: true},
+    _id: {type: String, required: true, unique: true},
+    auth0id: {type: String, required: true, unique: true},
+    artistAlias: {type: String, required: true},
+    profession: {type: [String], required: true},
     genre: {type: [String], required: true, default: []},
     biography: {type: String, required: true},
     phone_num: {type: String, required: true},
