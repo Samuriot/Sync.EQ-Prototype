@@ -18,7 +18,7 @@ export function createAppConfig() {
         domain: ENV.auth0Domain,
         clientId: ENV.auth0ClientId,
         authorizationParams: {
-          redirect_uri: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4200'
+          redirect_uri: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4200/create'
         },
         // Enable caching of tokens in localStorage
         cacheLocation: 'localstorage',
