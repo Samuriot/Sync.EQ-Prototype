@@ -23,8 +23,4 @@ export const routes: Routes = [
         path: 'create',
         component: CreateProfilePage
     },
-        component: ProfilePage,
-        //When accessing the profile page, the user must be authenticated, or else they will be redirected to the home page
-        canActivate: [authGuard]
-    }
 ];
