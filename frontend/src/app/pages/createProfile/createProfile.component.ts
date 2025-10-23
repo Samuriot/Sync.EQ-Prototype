@@ -39,14 +39,11 @@ export class CreateProfilePage implements OnInit{
         this.auth.user$.subscribe({
           next: (res) => console.log(this.httpC.get(`http://localhost:3000/api/users/get/${res?.nickname}`).subscribe({
             next: (response) => {
-              console.log('✅ API Response:', response);
+              console.log('API Response:', response);
             },
             error: (error) => {
-              console.error('❌ API Error:', error);
+              console.error('API Error:', error);
             },
-            complete: () => {
-              console.log('Request complete');
-            }
           }))
         });
       }
