@@ -33,41 +33,21 @@ export class CreateProfilePage implements OnInit{
                 private router: Router,
                 public auth: AuthService
     ) {}
-
+    
+    // initiates when a page is loaded
+    // asked chatgpt for "Performing API requests from Angular to Express Backend" for guidance on how to perform api calls
     ngOnInit(): void {
       if(this.auth.isAuthenticated$) {    
         this.auth.user$.subscribe({
           next: (res) => console.log(this.httpC.get(`http://localhost:3000/api/users/get/${res?.nickname}`).subscribe({
             next: (response) => {
-              console.log('API Response:', response);
+              console.log('Response:', response);
             },
             error: (error) => {
-              console.error('API Error:', error);
+              console.error('Error:', error);
             },
           }))
         });
       }
     }
-
-
-  // ngOnInit(): void {
-  //   this.auth.isAuthenticated$
-  //     .pipe(
-  //       filter((loggedIn) => loggedIn), // wait until user is logged in
-  //       switchMap(() => this.auth.getAccessTokenSilently({
-  //         authorizationParams: {
-  //           audience: 'https://dev-ee4ntnz0ben62qyp.us.auth0.com/api/v2/',
-  //           scope: "openid profile email offline_access",
-  //         },
-  //       })),
-  //       switchMap((token) => {
-  //         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  //         return this.httpC.get('http://localhost:3000/api/users/check', { headers });
-  //       })
-  //     )
-  //     .subscribe({
-  //       next: (res) => console.log('API response:', res),
-  //       error: (err) => console.error('API error:', err),
-  //     });
-  // }
 }
