@@ -36,7 +36,8 @@ app.get("/check", async (req, res) => {
 // find a specific user
 app.get("/get/:username", async (req, res) => {
     try {
-        const user = await User.find({ username: req.params.username });
+        console.log("received request for " + req.params.username)
+        const user = await User.findOne({ username: req.params.username });
         if(!user) {
             console.log(`failed to find user of name: ${req.params.username}`)
             return res.status(404).json({ error: "User not found" });

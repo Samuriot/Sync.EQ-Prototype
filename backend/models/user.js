@@ -6,7 +6,6 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // User Class
 const UserSchema = new mongoose.Schema({
-    _id: {type: ObjectId},
     auth0id: {type: String, required: true, unique: true},
     username: {type: String, required: true},
     artistAlias: {type: String, required: true},
