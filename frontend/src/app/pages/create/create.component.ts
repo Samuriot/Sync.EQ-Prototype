@@ -59,7 +59,7 @@ export class CreatePage implements OnInit {
         this.httpC.post(ENV.apiUrl+ 'api/users/', accountPayload).subscribe({
             next: (response) => {
                 console.log('Server Response:', response);
-                this.router.navigateByUrl("/profile");
+                this.router.navigateByUrl(`/`);
             },
             error: (error) => {
                 console.error('Error submitting form:', error);
