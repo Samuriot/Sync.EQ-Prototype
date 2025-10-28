@@ -4,14 +4,14 @@ export interface SocialMediaLink {
 }
 
 export interface User {
-    _id: string;
-    professions: string[];
-    artist_name: string;
-    username: string;
-    genres: string[]; 
-    biography: string;
-    phone_num: string;
-    email: string;
+    _id?: string;
+    professions?: string[];
+    artist_name?: string;
+    username?: string;
+    genres?: string[]; 
+    biography?: string;
+    phone_num?: string;
+    email?: string;
 
     daws?: string[];
     external_visits?: string[];

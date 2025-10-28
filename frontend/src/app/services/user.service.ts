@@ -8,12 +8,12 @@ import { ENV } from '../core/environment';
     providedIn: 'root'
 })
 export class UserService {
-    private baseUrl = `${ENV.apiUrl}/users`;
+    private baseUrl = `${ENV.apiUrl}api/users`;
 
     constructor(private http: HttpClient) { }
 
     getProfile(username: string): Observable<User> {
-        return this.http.get<User>(`${this.baseUrl}/${username}`);
+        return this.http.get<User>(`${this.baseUrl}/get/${username}`);
     }
 
     getAllProfiles(): Observable<User> {
