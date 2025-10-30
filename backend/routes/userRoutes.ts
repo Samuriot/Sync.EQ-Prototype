@@ -11,7 +11,7 @@ app.post("/", uc.authenticateUser);
 // });
 
 app.get("/check", uc.authenticateUser);
-app.get("/get/:username", uc.getSpecificUser);
 app.get("/get", uc.getUsers);
+app.get("/get/:username", uc.getSpecificUser);
 
 export default app;
