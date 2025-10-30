@@ -30,8 +30,8 @@ app.get("/:username/:postId", async (req, res) => {
 app.get("/:username", async (req, res) => {
     try {
         const posts = await Post.find({ author: req.params.username });
-        if(!posts) {
-            return res.status(404).json({ error: "No user found" });
+        if(posts.length === 0) {
+            return res.status(404).json({ error: "No posts found with associated user" });
         }
         res.status(200).json(posts);
     } catch(err) {
@@ -43,7 +43,7 @@ app.get("/:username", async (req, res) => {
 app.get("/", async (req, res) => {
     try {
         const posts = await Post.find();
-        if(!posts) {
+        if(posts.length === 0) {
             return res.status(404).json({ error: "No posts exist on Sync.EQ" });
         }
         res.status(200).json(posts);
