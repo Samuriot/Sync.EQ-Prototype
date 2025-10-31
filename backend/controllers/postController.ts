@@ -27,7 +27,7 @@ export async function getUsersPosts(req: Request, res: Response): Promise<any> {
 
 export async function getSpecificPost(req: Request, res: Response): Promise<any> {
     try {
-        const post = await Post.findById(req.params.postId);
+        const post = await Post.findOne({postId: req.params.postId});
         if(!post) {
             console.log(`failed to find post w/ id: ${req.params.postId}`)
             return res.status(404).json({ error: "Post not found" });
