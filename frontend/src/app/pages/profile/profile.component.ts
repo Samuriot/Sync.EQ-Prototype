@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SynceqHeader } from '../../components/homeHeader/homeHeader.component';
 import { VinylRecord } from '../../components/vinylRecord/vinylRecord.component';
 import { InputField } from '../../components/inputField/inputField.component';
 import { ArrayInputField } from '../../components/arrayInputField/arrayInputField.component';
 import { SelectInputField } from '../../components/selectInputField/selectInputField.component';
 import { User } from '../../models/users';
 import { UserService } from '../../services/user.service';
+import { MediaImageService } from '../../services/media/image.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, InputField, ArrayInputField, SelectInputField, SynceqHeader, VinylRecord],
+  imports: [CommonModule, InputField, ArrayInputField, SelectInputField, VinylRecord],
   templateUrl: './profile.component.html',
 })
 export class ProfilePage {
@@ -20,8 +20,10 @@ export class ProfilePage {
   isLoading? = true;
   error = '';
   username!: string;
+  profilePicURL!: string;
 
   constructor(private userService: UserService,
+              private mediaService: MediaImageService,
               private route : ActivatedRoute
   ) {}
 
@@ -29,6 +31,7 @@ export class ProfilePage {
     this.username = this.route.snapshot.paramMap.get('username') ?? '';
     if (this.username) {
       this.fetchUser();
+      this.fetchProfilePic();
     } else {
       console.log("nothing found");
     }
@@ -47,6 +50,19 @@ export class ProfilePage {
         this.isLoading = false;
         console.error(err);
       },
+    });
+  }
+
+  fetchProfilePic() {
+    this.mediaService.getUserProfilePic(this.username).subscribe({
+        next: (data) => {
+            console.log(data.url);
+            this.profilePicURL = data.url;
+        },
+        error: (err) => {
+            console.error('Failed to fetch profile pic', err);
+            this.profilePicURL = '';
+        }
     });
   }
 

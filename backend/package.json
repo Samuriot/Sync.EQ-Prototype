@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@azure/storage-blob": "^12.29.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
@@ -20,12 +21,14 @@
     "express-oauth2-jwt-bearer": "^1.7.1",
     "jwks-rsa": "^3.2.0",
     "mongoose": "^8.19.1",
+    "multer": "^2.0.2",
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.5",
     "@types/jest": "^30.0.0",
     "@types/mongoose": "^5.11.96",
+    "@types/multer": "^2.0.0",
     "@types/node": "^24.9.2",
     "nodemon": "^3.1.10",
     "ts-jest": "^29.4.5",

@@ -44,10 +44,10 @@
 
       <div class="d-flex align-items-right">
         <!-- Profile Picture for logged in user -->
-        <div class="dropdown">
+        <div *ngIf="isLoggedIn" class="dropdown">
           <a class = "d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
             <img
-              src="https://geo-media.beatport.com/image_size/590x404/e9ff1326-8d42-4f9a-aaf6-de59d5c02ced.jpg"
+              [src]="profilePicURL"
               class="rounded-circle ms-3"
               width="40"
               height="40"
@@ -62,7 +62,7 @@
           </ul>
         </div>
         <!--Login/Logout Button-->
-          <app-auth-button></app-auth-button>
+        <app-auth-button></app-auth-button>
       </div>
     </div>
   </div>
