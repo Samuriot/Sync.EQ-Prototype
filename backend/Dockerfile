@@ -16,6 +16,8 @@ COPY . .
 # Build TypeScript if needed (adjust if you already compile locally)
 RUN npm run build
 
+RUN npm run test
+
 # Expose port (match your Express port)
 EXPOSE 3000
 
