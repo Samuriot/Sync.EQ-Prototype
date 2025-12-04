@@ -9,11 +9,57 @@ import { UserService } from '../../services/user.service';
 import { MediaImageService } from '../../services/media/image.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/animations';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, InputField, ArrayInputField, SelectInputField, VinylRecord],
+  standalone: true,
+  imports: [
+    CommonModule,
+    InputField,
+    ArrayInputField,
+    SelectInputField,
+    VinylRecord
+  ],
   templateUrl: './profile.component.html',
+
+  animations: [
+    // PROFILE → SLIDE OUT LEFT
+    trigger('profileSlide', [
+      state('visible', style({ 
+        transform: 'translateX(0)', 
+        opacity: 1,
+        zIndex: 20
+      })),
+      state('hidden', style({ 
+        transform: 'translateX(-150%)', 
+        opacity: 0,
+        zIndex: 20
+      })),
+      transition('visible <=> hidden', animate('600ms cubic-bezier(0.25, 0.46, 0.45, 0.94)'))
+    ]),
+
+    // VINYL → MOVE FROM RIGHT EDGE TO CENTER + SCALE UP + UNROTATE
+    trigger('vinylSlide', [
+      state('hidden', style({ 
+        transform: 'translate(calc(-50% + 18vw), -50%)', 
+        opacity: 1,
+        zIndex: 0
+      })),
+      state('visible', style({ 
+        transform: 'translate(-50%, -50%)', 
+        opacity: 1,
+        zIndex: 0
+      })),
+      transition('hidden <=> visible', animate('600ms cubic-bezier(0.25, 0.46, 0.45, 0.94)'))
+    ])
+  ]
 })
 export class ProfilePage {
   title = 'profile-page';
@@ -27,17 +73,21 @@ export class ProfilePage {
   profilePicPreview: string | ArrayBuffer | null = null;
 
 
-  constructor(private userService: UserService,
-              private mediaService: MediaImageService,
-              private auth: AuthService,
-              private route : ActivatedRoute
+  vinylOpen: boolean = false;
+
+  constructor(
+    private userService: UserService,
+    private mediaService: MediaImageService,
+    private auth: AuthService,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.username = this.route.snapshot.paramMap.get('username') ?? '';
     if (this.username) {
       this.fetchUser();
       this.fetchProfilePic();
+
       if (this.auth.user$) {
         this.auth.user$.subscribe(authUser => {
           if (authUser && authUser.nickname === this.username) {
@@ -45,8 +95,11 @@ export class ProfilePage {
           }
         });
       }
-    } else {
     }
+  }
+
+  toggleVinyl() {
+    this.vinylOpen = !this.vinylOpen;
   }
 
   fetchUser() {
@@ -56,7 +109,7 @@ export class ProfilePage {
         this.user = data;
         this.isLoading = false;
       },
-      error: (err) => {
+      error: err => {
         this.error = 'Failed to load profile.';
         this.isLoading = false;
       },
@@ -82,14 +135,14 @@ export class ProfilePage {
     const updatedUser = { ...this.user, [field]: value };
 
     this.userService.updateProfile(this.username, updatedUser).subscribe({
-      next: (data) => {
+      next: data => {
         this.user = data;
         console.log('Profile updated successfully:', data);
-        this.fetchUser()
+        this.fetchUser();
       },
-      error: (err) => {
+      error: err => {
         console.error('Failed to update profile:', err);
-      },
+      }
     });
   }
 
