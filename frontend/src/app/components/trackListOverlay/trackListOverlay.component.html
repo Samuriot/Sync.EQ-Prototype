@@ -1,0 +1,50 @@
+<div *ngIf="isVisible" class="ps3-wrapper">
+
+  <!-- HEADER WITH ADD AUDIO BUTTON -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h4 style="margin: 0; margin-right: 0.5rem; color: white;">My Audio</h4>
+    <button 
+      *ngIf="isEditable" 
+      (click)="onAddAudioClick()"
+      [disabled]="isUploading"
+      class="btn btn-sm btn-primary"
+      style="padding: 0.5rem 1rem;"
+    >
+      {{ isUploading ? 'Uploading...' : 'Add Audio' }}
+    </button>
+  </div>
+
+  <!-- HIDDEN FILE INPUT -->
+  <input 
+    #fileInput 
+    type="file" 
+    (change)="onFileSelected($event)"
+    accept="audio/*"
+    style="display: none;"
+  />
+
+  <!-- LEFT SIDE: TRACK LIST -->
+  <div class="ps3-overlay-container">
+    <div 
+      *ngFor="let track of tracks; let i = index" 
+      class="track-item"
+      [class.selected]="i === selectedIndex"
+      (click)="selectTrack(i)"
+    >
+      <div class="track-title">{{ track.projectName }}</div>
+      <div class="track-duration">{{ track.createdAt | date: 'short' }}</div>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE: DETAILS PANEL -->
+  <track-details-panel
+    [track]="selectedTrack"
+    [username]="username"
+    [visible]="!!selectedTrack && isVisible"
+  ></track-details-panel>
+
+</div>
+ 
+
+
+
