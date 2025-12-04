@@ -1,4 +1,3 @@
-// Mock the User model - MUST be at the top level, before describe blocks
 jest.mock('../models/user.js', () => ({
     __esModule: true,
     default: {
