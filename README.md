@@ -1,5 +1,5 @@
 # Sync.EQ - Equalize Your Connections
-Quarter Long Project for CPSC 5240
+A social platform for creatives
 
 ## Prerequisites needed
 - NodeJS
